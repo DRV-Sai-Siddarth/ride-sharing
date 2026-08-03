@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: matching-service
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      driverLocationService:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000ms
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+driver:
+  location:
+    service:
+      url: http://driver-location-service:8081
+
+server:
+  port: 8082
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/

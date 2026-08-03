@@ -1,0 +1,29 @@
+services:
+  ride-db-init:
+    image: cockroachdb/cockroach:v25.2.1
+    container_name: ride-db-init
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      "./cockroach sql --insecure --host=cockroachdb:26257 -e 'CREATE DATABASE IF NOT EXISTS ride_db;'"
+    networks:
+      - ride-network
+
+  ride-service:
+    image: rdutta2/ride-service:v1
+    container_name: ride-service
+    depends_on:
+      - ride-db-init
+    ports:
+      - "8081:8081"
+    environment:
+      DB_URL: jdbc:postgresql://cockroachdb:26257/ride_db?sslmode=disable
+      DB_USERNAME: root
+      DB_PASSWORD: ""
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9093
+      EUREKA_URL: http://discovery-service:8761/eureka/
+    networks:
+      - ride-network
+
+networks:
+  ride-network:
+    external: true

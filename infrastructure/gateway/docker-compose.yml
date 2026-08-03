@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+
+  api-gateway:
+
+    image: rdutta2/api-gateway:v1
+
+    container_name: api-gateway
+
+    ports:
+      - "4040:4040"
+
+    environment:
+      EUREKA_URL: http://discovery-service:8761/eureka/
+
+    networks:
+      - ride-network
+
+networks:
+  ride-network:
+    external: true

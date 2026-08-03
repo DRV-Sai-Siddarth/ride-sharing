@@ -1,0 +1,225 @@
+[
+  {
+    "driverId": "driver_101",
+    "latitude": 13.0015,
+    "longitude": 77.6152,
+    "heading": 90.0,
+    "speed": 18.4
+  },
+  {
+    "driverId": "driver_102",
+    "latitude": 12.9998,
+    "longitude": 77.6135,
+    "heading": 180.0,
+    "speed": 12.7
+  },
+  {
+    "driverId": "driver_103",
+    "latitude": 13.0028,
+    "longitude": 77.6168,
+    "heading": 45.0,
+    "speed": 22.1
+  },
+  {
+    "driverId": "driver_104",
+    "latitude": 13.0001,
+    "longitude": 77.6127,
+    "heading": 270.0,
+    "speed": 10.5
+  },
+  {
+    "driverId": "driver_105",
+    "latitude": 13.0009,
+    "longitude": 77.6143,
+    "heading": 315.0,
+    "speed": 15.1
+  },
+  {
+    "driverId": "driver_106",
+    "latitude": 13.0034,
+    "longitude": 77.6176,
+    "heading": 135.0,
+    "speed": 24.8
+  },
+  {
+    "driverId": "driver_107",
+    "latitude": 12.9987,
+    "longitude": 77.6118,
+    "heading": 225.0,
+    "speed": 14.3
+  },
+  {
+    "driverId": "driver_108",
+    "latitude": 13.0019,
+    "longitude": 77.6182,
+    "heading": 60.0,
+    "speed": 20.6
+  },
+  {
+    "driverId": "driver_109",
+    "latitude": 12.9979,
+    "longitude": 77.6157,
+    "heading": 330.0,
+    "speed": 16.2
+  },
+  {
+    "driverId": "driver_110",
+    "latitude": 13.0042,
+    "longitude": 77.6139,
+    "heading": 120.0,
+    "speed": 19.7
+  }
+]
+
+
+
+1. Rider near Driver 101 & Driver 105
+{
+  "riderId": "rider_001",
+  "pickupLocation": {
+    "latitude": 13.0013,
+    "longitude": 77.6149
+  },
+  "dropoffLocation": {
+    "latitude": 13.0095,
+    "longitude": 77.6280
+  }
+}
+
+Expected: driver_101 or driver_105
+
+2. Rider near Driver 102
+{
+  "riderId": "rider_002",
+  "pickupLocation": {
+    "latitude": 12.9996,
+    "longitude": 77.6133
+  },
+  "dropoffLocation": {
+    "latitude": 13.0120,
+    "longitude": 77.6255
+  }
+}
+
+Expected: driver_102
+
+3. Rider near Driver 103
+{
+  "riderId": "rider_003",
+  "pickupLocation": {
+    "latitude": 13.0029,
+    "longitude": 77.6166
+  },
+  "dropoffLocation": {
+    "latitude": 13.0145,
+    "longitude": 77.6330
+  }
+}
+
+Expected: driver_103
+
+4. Rider near Driver 104
+{
+  "riderId": "rider_004",
+  "pickupLocation": {
+    "latitude": 13.0000,
+    "longitude": 77.6128
+  },
+  "dropoffLocation": {
+    "latitude": 13.0180,
+    "longitude": 77.6290
+  }
+}
+
+Expected: driver_104
+
+5. Rider near Driver 106
+{
+  "riderId": "rider_005",
+  "pickupLocation": {
+    "latitude": 13.0035,
+    "longitude": 77.6175
+  },
+  "dropoffLocation": {
+    "latitude": 13.0200,
+    "longitude": 77.6400
+  }
+}
+
+Expected: driver_106
+
+6. Rider near Driver 107
+{
+  "riderId": "rider_006",
+  "pickupLocation": {
+    "latitude": 12.9988,
+    "longitude": 77.6119
+  },
+  "dropoffLocation": {
+    "latitude": 13.0110,
+    "longitude": 77.6275
+  }
+}
+
+Expected: driver_107
+
+7. Rider near Driver 108
+{
+  "riderId": "rider_007",
+  "pickupLocation": {
+    "latitude": 13.0020,
+    "longitude": 77.6181
+  },
+  "dropoffLocation": {
+    "latitude": 13.0225,
+    "longitude": 77.6450
+  }
+}
+
+Expected: driver_108
+
+8. Rider near Driver 109
+{
+  "riderId": "rider_008",
+  "pickupLocation": {
+    "latitude": 12.9978,
+    "longitude": 77.6158
+  },
+  "dropoffLocation": {
+    "latitude": 13.0085,
+    "longitude": 77.6310
+  }
+}
+
+Expected: driver_109
+
+9. Rider near Driver 110
+{
+  "riderId": "rider_009",
+  "pickupLocation": {
+    "latitude": 13.0040,
+    "longitude": 77.6140
+  },
+  "dropoffLocation": {
+    "latitude": 13.0175,
+    "longitude": 77.6360
+  }
+}
+
+Expected: driver_110
+
+10. Competition Scenario (Multiple Drivers Nearby)
+
+This is useful for testing your matching algorithm when several drivers are almost equally close.
+
+{
+  "riderId": "rider_010",
+  "pickupLocation": {
+    "latitude": 13.0010,
+    "longitude": 77.6150
+  },
+  "dropoffLocation": {
+    "latitude": 13.0250,
+    "longitude": 77.6500
+  }
+}

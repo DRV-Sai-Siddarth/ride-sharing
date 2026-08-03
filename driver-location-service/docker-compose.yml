@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # REDIS STACK
+  # ==========================================
+  redis:
+    image: redis/redis-stack:latest
+    container_name: redis_geo
+    ports:
+      - "6379:6379"   # Standard Redis database port
+      - "8001:8001"   # Redis Insight GUI web interface
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  # ==========================================
+  # CONFLUENT KAFKA (KRaft Mode - No ZooKeeper)
+  # ==========================================
+  kafka:
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: kafka_broker
+    ports:
+      - "9092:9092"   # External port for host/spring apps
+      - "9093:9093"   # Internal broker communication
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:9093,PLAINTEXT_HOST://localhost:9092'
+      KAFKA_LISTENERS: 'PLAINTEXT://kafka:9093,CONTROLLER://kafka:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    restart: always
+
+  # ==========================================
+  # CONFLUENT CONTROL CENTER (Web UI)
+  # ==========================================
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:7.6.0
+    container_name: kafka_control_center
+    depends_on:
+      - kafka
+    ports:
+      - "9021:9021"   # Confluent Control Center Web UI
+    environment:
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: 'kafka:9093'
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+      CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+      CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+      PORT: 9021
+    restart: always
+
+volumes:
+  redis_data:
+  kafka_data:
